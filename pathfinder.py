@@ -53,7 +53,7 @@ class PathFinder:
                 source_id = strings[0].strip()
                 target_id = strings[1].strip()
 
-                distance = self.harversine(source_id, target_id)
+                distance = self.haversine(source_id, target_id)
 
                 self.map.setdefault(source_id, {})[target_id] = distance
                 self.map.setdefault(target_id, {})[source_id] = distance
@@ -63,14 +63,14 @@ class PathFinder:
         if start not in self.stops or target not in self.stops:
             print('NONE')
             return
-            
+
         shortest = {}   # actual distance from start
         estimate = {}   # f-value = dist + heuristic
         pred = {}   # pred
         visited = set()
 
         shortest[start] = 0
-        estimate[start] = self.harversine(start, target)
+        estimate[start] = self.haversine(start, target)
         pred[start] = None
 
         # use tuple in headq to compares tuples one by one
@@ -102,19 +102,19 @@ class PathFinder:
                 new_dist = shortest[cur] + weight
                 
                 if new_dist < shortest.get(neighbor, float('inf')):
-                    shortes[neighbor] = new_dist
+                    shortest[neighbor] = new_dist
                     estimate[neighbor] = new_dist + self.haversine(neighbor, target)
                     pred[neighbor] = cur
                     heapq.heappush(pq, (estimate[neighbor], neighbor))
 
-        print None
+        print('NONE')
     
-    if __name__ == '__main__':
-        if len(sys.argv) != 6:
-            sys.exit(1)
-        
-        pf = PathFinder()
-        pf.build_graph(sys.argv[1], sys.argv[2])
+if __name__ == '__main__':
+    if len(sys.argv) != 6:
+        sys.exit(1)
+    
+    pf = PathFinder()
+    pf.build_graph(sys.argv[1], sys.argv[2])
 
-        if sys.argv[3] == 'astar':
-            pf.a_star(sys.arv[4], sys.argv[5])
+    if sys.argv[3] == 'astar':
+        pf.a_star(sys.argv[4], sys.argv[5])
