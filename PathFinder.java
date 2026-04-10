@@ -106,6 +106,12 @@ public class PathFinder {
      * @param target: goal stop
      */
     public void aStar(String start, String target) {
+        // edge cases
+        if (!stops.containsKey(start) || !stops.containsKey(target)) {
+            System.out.println("NONE");
+            return;
+        }
+
         // initialize the shortest path map from start stop to each other stop
         HashMap<String, Double> shortest = new HashMap<>();
         // initialize estimated distance: dist + heuristic

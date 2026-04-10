@@ -59,6 +59,11 @@ class PathFinder:
                 self.map.setdefault(target_id, {})[source_id] = distance
     
     def a_star(self, start, target):
+        # edge cases
+        if start not in self.stops or target not in self.stops:
+            print('NONE')
+            return
+            
         shortest = {}   # actual distance from start
         estimate = {}   # f-value = dist + heuristic
         pred = {}   # pred
@@ -73,6 +78,9 @@ class PathFinder:
 
         while pq:
             _, cur = heapq.heappop(pq)
+
+            if cur in visited:
+                continue
 
             if cur == target:
                 path = []
